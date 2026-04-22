@@ -1,0 +1,8 @@
+{
+  "block.gyroblock.gyro": "陀螺仪",
+  "item.gyroblock.gyro": "陀螺仪",
+  "item.gyroblock.gyro.tooltip1": "飞船自动平衡系统",
+  "item.gyroblock.gyro.tooltip2": "使物理结构保持水平向上",
+  "item.gyroblock.gyro.tooltip3": "上方红石信号可抑制其功率 (信号越强，扭矩越小)",
+  "itemGroup.gyroblock_tab": "陀螺仪模组"
+}

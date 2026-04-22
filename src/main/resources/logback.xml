@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <logger name="com.mojang.blaze3d.platform.GlDebug" level="OFF"/>
+    
+    <logger name="dev.ryanhcode.sable" level="WARN"/>
+</configuration>

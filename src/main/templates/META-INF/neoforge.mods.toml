@@ -1,0 +1,42 @@
+modLoader="javafml"
+loaderVersion="${loader_version_range}"
+license="CC0-1.0"
+
+[[mods]]
+modId="gyroblock" # 请确保此处填写的ID与你代码中的MODID一致
+version="${mod_version}"
+displayName="Gyro Stabilizer"
+authors="feng_fengff,color_garden777"
+# 确保 description 使用三个单引号，且内部没有多余的冲突符号
+description='''
+A stabilizer block for physics-based ships using the Sable engine. 
+Built for Create mod ecosystem. 
+'''
+
+[[dependencies.gyroblock]]
+    modId="neoforge"
+    type="required"
+    versionRange="[${neo_version},)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.gyroblock]]
+    modId="minecraft"
+    type="required"
+    versionRange="${minecraft_version_range}"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.gyroblock]]
+    modId="create"
+    type="required"
+    versionRange="[6.0,)" 
+    ordering="AFTER"
+    side="BOTH"
+
+[[dependencies.gyroblock]]
+    modId="sable"
+    type="required"
+    versionRange="[1.0.6,)"
+    ordering="AFTER"
+    side="BOTH"

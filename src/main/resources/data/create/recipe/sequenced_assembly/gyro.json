@@ -1,0 +1,103 @@
+{
+  "type": "create:sequenced_assembly",
+  "ingredient": {
+    "item": "simulated:gyroscopic_mechanism"
+  },
+  "loops": 5,
+  "results": [
+    {
+      "chance": 50.0,
+      "id": "gyroblock:gyro"
+    },
+    {
+      "chance": 50.0,
+      "id": "minecraft:end_stone_bricks"
+    }
+  ],
+  "sequence": [
+    {
+      "type": "create:filling",
+      "ingredients": [
+        {
+          "item": "simulated:gyroscopic_mechanism"
+        },
+        {
+          "type": "neoforge:single",
+          "amount": 500,
+          "fluid": "aeronautics:levitite_blend"
+        }
+      ],
+      "results": [
+        {
+          "id": "simulated:gyroscopic_mechanism"
+        }
+      ]
+    },
+    {
+      "type": "create:filling",
+      "ingredients": [
+        {
+          "item": "simulated:gyroscopic_mechanism"
+        },
+        {
+          "type": "neoforge:single",
+          "amount": 500,
+          "fluid": "aeronautics:levitite_blend"
+        }
+      ],
+      "results": [
+        {
+          "id": "simulated:gyroscopic_mechanism"
+        }
+      ]
+    },
+    {
+      "type": "create:pressing",
+      "ingredients": [
+        {
+          "item": "simulated:gyroscopic_mechanism"
+        }
+      ],
+      "results": [
+        {
+          "id": "simulated:gyroscopic_mechanism"
+        }
+      ]
+    },
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "simulated:gyroscopic_mechanism"
+        },
+        {
+          "item": "create:railway_casing"
+        }
+      ],
+      "results": [
+        {
+          "id": "simulated:gyroscopic_mechanism"
+        }
+      ]
+    },
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "simulated:gyroscopic_mechanism"
+        },
+        {
+          "item": "create:electron_tube"
+        }
+      ],
+      "results": [
+        {
+          "id": "simulated:gyroscopic_mechanism"
+        }
+      ]
+    }
+  ],
+  "transitional_item": {
+    "id": "simulated:gyroscopic_mechanism"
+  }
+}

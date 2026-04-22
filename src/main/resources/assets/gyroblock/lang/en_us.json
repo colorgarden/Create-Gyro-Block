@@ -1,0 +1,8 @@
+{
+  "block.gyroblock.gyro": "Gyro Stabilizer",
+  "item.gyroblock.gyro": "Gyro Stabilizer",
+  "item.gyroblock.gyro.tooltip1": "Ship Auto-Leveling System",
+  "item.gyroblock.gyro.tooltip2": "Keeps SubLevel oriented upright",
+  "item.gyroblock.gyro.tooltip3": "Redstone signal above dampens power (Higher signal = Lower torque)",
+  "itemGroup.gyroblock_tab": "Gyro Block Mod"
+}
