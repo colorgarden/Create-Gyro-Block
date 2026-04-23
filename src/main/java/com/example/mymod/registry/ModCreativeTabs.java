@@ -9,9 +9,11 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.DeferredHolder;
 
 public class ModCreativeTabs {
+    @SuppressWarnings("null")
     public static final DeferredRegister<CreativeModeTab> CREATIVE_TABS = 
         DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MyMod.MODID);
 
+    @SuppressWarnings("null")
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> MAIN_TAB = 
         CREATIVE_TABS.register("gyroblock_tab", () -> CreativeModeTab.builder()
             .title(Component.translatable("itemGroup.gyroblock_tab")) // 对应语言文件

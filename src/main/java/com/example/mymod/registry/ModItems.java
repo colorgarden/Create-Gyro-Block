@@ -19,6 +19,7 @@ public class ModItems {
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(MyMod.MODID);
 
     // 陀螺仪物品：包含黄色加粗提示和灰色说明
+    @SuppressWarnings("null")
     public static final DeferredItem<BlockItem> GYRO_ITEM = ITEMS.register("gyro", () -> 
         new BlockItem(ModBlocks.GYRO.get(), new Item.Properties()) {
             @SuppressWarnings("null")

@@ -3,96 +3,81 @@ package com.example.mymod.block;
 import com.example.mymod.blockentity.GyroBlockEntity;
 import com.example.mymod.registry.ModBlockEntities;
 import com.mojang.serialization.MapCodec;
+import com.simibubi.create.content.equipment.wrench.IWrenchable;
+import com.simibubi.create.content.kinetics.base.KineticBlock;
+import com.simibubi.create.foundation.block.IBE;
+
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.block.BaseEntityBlock;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+
+import javax.annotation.Nonnull;
+
 import org.jetbrains.annotations.Nullable;
 
-public class GyroBlock extends BaseEntityBlock {
+@SuppressWarnings("unused")
+public class GyroBlock extends KineticBlock implements IWrenchable, IBE<GyroBlockEntity> {
+    // 1.21.1 标准 Codec 定义，不需要再写额外的 Override 方法
     public static final MapCodec<GyroBlock> CODEC = simpleCodec(GyroBlock::new);
-    private static final VoxelShape SHAPE = box(0.0, 0.0, 0.0, 16.0, 16.0, 16.0);
 
-    public GyroBlock(BlockBehaviour.Properties properties) {
+    public GyroBlock(Properties properties) {
         super(properties);
     }
 
     @Override
-    protected MapCodec<? extends BaseEntityBlock> codec() {
+    protected MapCodec<? extends KineticBlock> codec() {
         return CODEC;
     }
 
-    @SuppressWarnings("null")
     @Override
-    public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        return SHAPE;
+    public boolean hasShaftTowards(LevelReader world, BlockPos pos, BlockState state, Direction face) {
+        return face.getAxis() == Direction.Axis.Y;
+    }
+
+    @Override
+    public Direction.Axis getRotationAxis(BlockState state) {
+        return Direction.Axis.Y;
+    }
+
+    // ===== IBE 接口实现：让 Create 自动管理 BE 和动力连接 =====
+    @Override
+    public Class<GyroBlockEntity> getBlockEntityClass() {
+        return GyroBlockEntity.class;
+    }
+
+    @Override
+    public BlockEntityType<? extends GyroBlockEntity> getBlockEntityType() {
+        return ModBlockEntities.GYRO_BE.get();
     }
 
     @SuppressWarnings("null")
+    @Nullable
     @Override
-    public void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean isMoving) {
-        super.onPlace(state, level, pos, oldState, isMoving);
-       if (!level.isClientSide) {
-        // 1. 发送方块更新包到客户端，强制重新渲染该区域
-        level.sendBlockUpdated(pos, oldState, state, 3);
-        
-        // 2. 如果它在子世界上，告诉 Sable 这里的物理数据变了
-        if (level.getBlockEntity(pos) instanceof GyroBlockEntity be) {
-            be.markPhysicsDirty();
-        }
-    }
+    public BlockEntity newBlockEntity(@javax.annotation.Nullable BlockPos pos, @javax.annotation.Nullable BlockState state) {
+        return ModBlockEntities.GYRO_BE.get().create(pos, state);
     }
 
-    @SuppressWarnings("null")
     @Override
-    public void destroy(LevelAccessor level, BlockPos pos, BlockState state) {
-        super.destroy(level, pos, state);
-        if (level instanceof Level world && !world.isClientSide) {
-            notifySubLevelUpdate(world, pos);
-        }
+    public VoxelShape getShape(@Nonnull BlockState state, @Nonnull BlockGetter level, @Nonnull BlockPos pos, @Nonnull CollisionContext context) {
+        return box(0.0, 0.0, 0.0, 16.0, 16.0, 16.0);
     }
 
-    private void notifySubLevelUpdate(Level level, BlockPos pos) {
-        if (level.getBlockEntity(pos) instanceof GyroBlockEntity gyroBE) {
-            gyroBE.markPhysicsDirty();
-        }
-    }
-
-    @SuppressWarnings("null")
     @Override
-    public RenderShape getRenderShape(BlockState state) {
+    public RenderShape getRenderShape(@Nonnull BlockState state) {
         return RenderShape.MODEL;
     }
 
-    @SuppressWarnings("null")
-    @Nullable
     @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        // 仅在服务端运行 tick 逻辑
-        return level.isClientSide ? null : createTickerHelper(type, ModBlockEntities.GYRO_BE.get(), GyroBlockEntity::tick);
-    }
-
-    @SuppressWarnings("null")
-    @Override
-    public void fallOn(Level level, BlockState state, BlockPos pos, Entity entity, float fallDistance) {
-        // 核心特性：站在该方块上免疫掉落伤害
+    public void fallOn(@Nonnull Level level, @Nonnull BlockState state, @Nonnull BlockPos pos, @Nonnull Entity entity, float fallDistance) {
         super.fallOn(level, state, pos, entity, 0.0F);
-    }
-
-    @SuppressWarnings("null")
-    @Nullable
-    @Override
-    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return new GyroBlockEntity(pos, state);
     }
 }

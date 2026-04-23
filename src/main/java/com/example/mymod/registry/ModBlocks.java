@@ -9,6 +9,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 public class ModBlocks {
     public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(MyMod.MODID);
 
+    @SuppressWarnings("null")
     public static final DeferredBlock<GyroBlock> GYRO = BLOCKS.registerBlock("gyro", 
         GyroBlock::new, BlockBehaviour.Properties.of().strength(2.0f).requiresCorrectToolForDrops());
 }
